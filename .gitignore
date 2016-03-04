@@ -45,3 +45,11 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+# Specific ignores for this project!
+Makefile
+Makefile.Debug
+Makefile.Release
+**/debug
+**/release
