@@ -1,4 +1,5 @@
-<h2>Demo Qt App for CLS Job Application
+<h2>Demo Qt App for CLS Job Application</h2>
+
 
 Progess: Completed layout for first window.
 
