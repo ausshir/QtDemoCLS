@@ -2,6 +2,7 @@
 #define SAMPLEBROWSER_H
 
 #include <QWidget>
+#include "sampleEditor.h"
 
 class QHBoxLayout;
 class QVBoxLayout;
@@ -24,6 +25,13 @@ class Window : public QWidget
 		// No slots yet
 
 	private:
+		QHBoxLayout *mainLayout;
+		Editor *editPaneLayout;
+		QVBoxLayout *selectPaneLayout;
+		QListWidget *sampleSelectList;
+		QPushButton *sampleCreateButton;
+		
+		Dialog *dialog;
 
 };
 

@@ -1,37 +1,28 @@
 #include <QtWidgets>
 
 #include "sampleBrowser.h"
+#include "sampleEditor.h"
 
 Window::Window()
-{
-    
-	// Right Edit Pane
-	QLabel *sampleNameLabel = new QLabel("Sample Name");
-	QLineEdit *sampleNameEdit = new QLineEdit();
-	
-	QLabel *sampleChemLabel = new QLabel("Sample Chemical");
-	QLineEdit *sampleChemEdit = new QLineEdit();
-	
-	QLabel *sampleNoteLabel = new QLabel("Sample Notes");
-	QPlainTextEdit *sampleNoteEdit = new QPlainTextEdit();
-	
-	
-	QFormLayout *editPaneLayout = new QFormLayout();
-	editPaneLayout->addRow(sampleNameLabel, sampleNameEdit);
-	editPaneLayout->addRow(sampleChemLabel, sampleChemEdit);
-	editPaneLayout->addRow(sampleNoteLabel, sampleNoteEdit);
+{	
+	// Right Editor Pane
+	editPaneLayout = new Editor();
 	
 	// Left Selection Pane
-	QListWidget *sampleSelectList = new QListWidget();
-	QPushButton *sampleCreateButton = new QPushButton("New Sample");
-	QVBoxLayout *selectPaneLayout = new QVBoxLayout();
+	sampleSelectList = new QListWidget();
+	sampleCreateButton = new QPushButton("New Sample");
+	selectPaneLayout = new QVBoxLayout();
 	selectPaneLayout->addWidget(sampleSelectList);
 	selectPaneLayout->addWidget(sampleCreateButton);
 	
 	// Assemble the main layout
-	QHBoxLayout *mainLayout = new QHBoxLayout();
+	mainLayout = new QHBoxLayout();
 	mainLayout->addLayout(selectPaneLayout);
 	mainLayout->addLayout(editPaneLayout);
+	
+	// Show the Dialog
+	dialog = new Dialog(this);
+	dialog->show();
 	
 	setLayout(mainLayout);
 

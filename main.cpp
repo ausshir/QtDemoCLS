@@ -7,8 +7,8 @@ int main(int argc, char *argv[]) {
 	QApplication app(argc, argv);
 	
 	// Root widget (sample browser)
-	Window window;
-	window.show();
+	Window mainWindow;
+	mainWindow.show();
 	
 	return app.exec();
 }
