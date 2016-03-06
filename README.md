@@ -1,9 +1,9 @@
 <h2>Demo Qt App for CLS Job Application</h2>
 
 
-Progess: Completed layout for first window.
+Progess: Everything is there. But the memory leaks and performance issues are pretty serious... I admit I haven't used C++ on the desktop in a while! ;)
 
-To Do: Create dialog, add data models
+To Do: Fix all memory leaks, find a better way to transfer data around and clean up the public/private classes to be more sane.
 
 
 
