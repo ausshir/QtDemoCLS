@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "sampleEditor.h"
+#include "dataStructure.h"
 
 class QHBoxLayout;
 class QVBoxLayout;
@@ -20,9 +21,13 @@ class Window : public QWidget
 
 	public:
 		Window();
+		
+	public slots:
 
 	private slots:
-		// No slots yet
+		void newSample(void);
+		void editSample(void);
+		void showUpdate(void);
 
 	private:
 		QHBoxLayout *mainLayout;
@@ -31,7 +36,12 @@ class Window : public QWidget
 		QListWidget *sampleSelectList;
 		QPushButton *sampleCreateButton;
 		
+		SampleDataCollection *collection;
+		
 		Dialog *dialog;
+		
+		void updateSelectionPane(void);
+		void replaceRow(int, int);
 
 };
 

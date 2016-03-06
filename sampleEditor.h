@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QFormLayout>
+#include "dataStructure.h"
 
 class QLabel;
 class QLineEdit;
@@ -14,17 +15,24 @@ class Editor : public QFormLayout{
 	
 	public:
 		Editor();
+		SampleData *sample;
+		QLineEdit *sampleNameEdit;
+		QLineEdit *sampleChemEdit;
+		QPlainTextEdit *sampleNoteEdit;
+	
+	public slots:
+		void refresh(void);	
 		
 	private slots:
+		void updateName(void);
+		void updateChem(void);
+		void updateNote(void);
 	
 	private:
 		QLabel *sampleNameLabel;
-		QLineEdit *sampleNameEdit;
 		QLabel *sampleChemLabel;
-		QLineEdit *sampleChemEdit;
 		QLabel *sampleNoteLabel;
-		QPlainTextEdit *sampleNoteEdit;
-
+		
 };
 
 class Dialog : public QDialog{
@@ -33,7 +41,8 @@ class Dialog : public QDialog{
 	public:
 		Dialog(QWidget *parent = 0);
 		
-	private slots:
+	public slots:
+		SampleData* getData(void);
 		
 	private:
 		Editor *editPaneLayout;
