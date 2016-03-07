@@ -51,5 +51,6 @@ Temporary Items
 Makefile
 Makefile.Debug
 Makefile.Release
-**/debug
-**/release
+debug/*
+release/*
+!release/QtDemoCLS.exe
