@@ -54,3 +54,4 @@ Makefile.Release
 debug/*
 release/*
 !release/QtDemoCLS.exe
+!release/QtDemoCLS

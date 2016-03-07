@@ -22,7 +22,7 @@ class Editor : public QFormLayout{
 		~Editor();
 	
 	signals:
-		editorUpdated();
+		void editorUpdated(void);
 		
 	private slots:
 		void updateName(void);
