@@ -10,6 +10,9 @@ class QLineEdit;
 class QPlainTextEdit;
 class QDialogButtonBox;
 
+
+// Editor widget used in main window and dialog
+// See .cpp file for comments
 class Editor : public QFormLayout{
 	Q_OBJECT
 	
@@ -33,10 +36,15 @@ class Editor : public QFormLayout{
 		QLineEdit *sampleNameEdit;
 		QLineEdit *sampleChemEdit;
 		QPlainTextEdit *sampleNoteEdit;
-		SampleData *activeSample;
-		
+		SampleData *activeSample;	
 };
 
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+// Dialog brought up by the main window to create new samples
+// See .cpp file for comments
 class Dialog : public QDialog{
 	Q_OBJECT
 	
@@ -50,7 +58,6 @@ class Dialog : public QDialog{
 		Editor *editPaneLayout;
 		QDialogButtonBox *buttonBox;
 		QVBoxLayout *mainLayout;
-
 };
 
 #endif

@@ -15,8 +15,10 @@ class QLabel;
 class QListWidget;
 class QPushButton;
 
-class Window : public QWidget
-{
+
+// Qt Main Window
+// See .cpp file for comments
+class Window : public QWidget {
     Q_OBJECT
 
 	public:
@@ -40,7 +42,6 @@ class Window : public QWidget
 		Dialog *dialog;
 		
 		void updateSelectionPane(void);
-
 };
 
 #endif
