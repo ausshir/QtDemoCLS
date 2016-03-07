@@ -14,14 +14,12 @@ class Editor : public QFormLayout{
 	Q_OBJECT
 	
 	public:
-		Editor();
-		SampleData *sample;
-		QLineEdit *sampleNameEdit;
-		QLineEdit *sampleChemEdit;
-		QPlainTextEdit *sampleNoteEdit;
+		Editor(SampleData *sample, QWidget * parent = 0);
+		void connectSample(SampleData *sample);
+		~Editor();
 	
-	public slots:
-		void refresh(void);	
+	signals:
+		editorUpdated();
 		
 	private slots:
 		void updateName(void);
@@ -32,6 +30,10 @@ class Editor : public QFormLayout{
 		QLabel *sampleNameLabel;
 		QLabel *sampleChemLabel;
 		QLabel *sampleNoteLabel;
+		QLineEdit *sampleNameEdit;
+		QLineEdit *sampleChemEdit;
+		QPlainTextEdit *sampleNoteEdit;
+		SampleData *activeSample;
 		
 };
 
@@ -39,17 +41,16 @@ class Dialog : public QDialog{
 	Q_OBJECT
 	
 	public:
-		Dialog(QWidget *parent = 0);
+		Dialog(SampleData *sample, QWidget * parent = 0);
+		~Dialog();
 		
 	public slots:
-		SampleData* getData(void);
 		
 	private:
 		Editor *editPaneLayout;
 		QDialogButtonBox *buttonBox;
 		QVBoxLayout *mainLayout;
-		
-	
+
 };
 
 #endif

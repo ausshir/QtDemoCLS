@@ -16,6 +16,7 @@ class SampleDataCollection {
 	public:
 		SampleDataCollection();
 		QList<SampleData> list;
+		~SampleDataCollection();
 };
 
 

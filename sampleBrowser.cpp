@@ -6,7 +6,9 @@
 
 Window::Window() {	
 	// Right Editor Pane
-	editPaneLayout = new Editor();
+	
+	SampleData sample;
+	editPaneLayout = new Editor(&sample, this);
 	
 	// Left Selection Pane
 	sampleSelectList = new QListWidget();
@@ -28,15 +30,23 @@ Window::Window() {
 	collection = new SampleDataCollection();
 }
 
+Window::~Window() {
+	delete collection;
+	// Remaining widgets should be deleted automatically
+	
+}
+
 void Window::newSample() {
 	// Show the Dialog and get return state (accept/cancel)
-	dialog = new Dialog(this);
+	SampleData *sample = new SampleData;
+	dialog = new Dialog(sample, this);
+	dialog->setAttribute(Qt::WA_DeleteOnClose);
 	
 	if(dialog->exec() == QDialog::Accepted) {
-		SampleData *data = dialog->getData();
-		collection->list.insert(0, *data);
+		collection->list.insert(0, *sample);
 		updateSelectionPane();
 	}
+	else delete sample;
 	
 }
 
@@ -46,28 +56,20 @@ void Window::updateSelectionPane() {
 
 void Window::editSample() {
 	int index = sampleSelectList->count() - sampleSelectList->currentRow() - 1;
-	editPaneLayout->sample = &(collection->list[index]);
-	editPaneLayout->refresh();
+	editPaneLayout->connectSample(&(collection->list[index])); 
 	
-	connect(editPaneLayout->sampleNameEdit, SIGNAL(textChanged(QString)), this, SLOT(showUpdate()));
-	connect(editPaneLayout->sampleChemEdit, SIGNAL(textChanged(QString)), this, SLOT(showUpdate()));
-	connect(editPaneLayout->sampleNoteEdit, SIGNAL(textChanged(QString)), this, SLOT(showUpdate()));
+	connect(editPaneLayout, SIGNAL(editorUpdated()), this, SLOT(showUpdate()));
 }
 
 void Window::showUpdate() {
-	//QMessageBox msgBox;
-	//msgBox.setText(sampleNameEdit->text());
-	//msgBox.show();
-	
+
 	int row = sampleSelectList->currentRow();
 	int index = sampleSelectList->count() - row - 1;
-	replaceRow(row, index);
-
-}
-
-// Note, this doesn't seem quite right but I didn't see anything in docs to do what I wanted...
-void Window::replaceRow(int row, int index) {
+	
+	// I feel like there should be a built-in method for this.. couldn't find it in the docs
 	sampleSelectList->takeItem(row);
 	sampleSelectList->insertItem(row, collection->list[index].name + " " + collection->list[index].chemical);
 	sampleSelectList->setCurrentRow(row);
+
 }
+

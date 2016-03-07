@@ -21,8 +21,7 @@ class Window : public QWidget
 
 	public:
 		Window();
-		
-	public slots:
+		~Window();
 
 	private slots:
 		void newSample(void);
@@ -37,11 +36,10 @@ class Window : public QWidget
 		QPushButton *sampleCreateButton;
 		
 		SampleDataCollection *collection;
-		
+	
 		Dialog *dialog;
 		
 		void updateSelectionPane(void);
-		void replaceRow(int, int);
 
 };
 

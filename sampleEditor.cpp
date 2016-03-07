@@ -4,7 +4,7 @@
 #include "sampleEditor.h"
 #include "dataStructure.h"
 
-Editor::Editor(){
+Editor::Editor(SampleData *sample, QWidget *){
 	sampleNameLabel = new QLabel("Sample Name");
 	sampleNameEdit = new QLineEdit("Water");
 	
@@ -14,10 +14,10 @@ Editor::Editor(){
 	sampleNoteLabel = new QLabel("Sample Notes");
 	sampleNoteEdit = new QPlainTextEdit("<None>");
 	
-	sample = new SampleData;
-	sample->name = sampleNameEdit->text();
-	sample->chemical = sampleChemEdit->text();
-	sample->notes = sampleNoteEdit->toPlainText();
+	activeSample = sample;
+	activeSample->name = sampleNameEdit->text();
+	activeSample->chemical = sampleChemEdit->text();
+	activeSample->notes = sampleNoteEdit->toPlainText();
 	
 	this->addRow(sampleNameLabel, sampleNameEdit);
 	this->addRow(sampleChemLabel, sampleChemEdit);
@@ -26,43 +26,48 @@ Editor::Editor(){
 	// Update the struct when editing the fields
 	connect(sampleNameEdit, SIGNAL(textChanged(QString)), this, SLOT(updateName()));
 	connect(sampleChemEdit, SIGNAL(textChanged(QString)), this, SLOT(updateChem()));
-	connect(sampleNoteEdit, SIGNAL(textChanged(QString)), this, SLOT(updateNote()));
+	connect(sampleNoteEdit, SIGNAL(textChanged()), this, SLOT(updateNote()));
 }
 
+Editor::~Editor() {
+	// Widgets should be cleaned up automatically by parent
+	// Active sample is stored in the collection and deleted there
+}	
+
 void Editor::updateName() {
-	sample->name = sampleNameEdit->text();
-	
+	activeSample->name = sampleNameEdit->text();
+	emit editorUpdated();
 }
 
 void Editor::updateChem() {
-	sample->chemical = sampleChemEdit->text();
+	activeSample->chemical = sampleChemEdit->text();
+	emit editorUpdated();
 }
 
 void Editor::updateNote() {
-	sample->notes = sampleNoteEdit->toPlainText();
-
+	activeSample->notes = sampleNoteEdit->toPlainText();
+	emit editorUpdated();
 }
 
-void Editor::refresh() {
-	sampleNameEdit->setText(sample->name);
-	sampleChemEdit->setText(sample->chemical);
-	sampleNoteEdit->setPlainText(sample->notes);
+void Editor::connectSample(SampleData *sample) {
+	activeSample = sample;
+	sampleNameEdit->setText(activeSample->name);
+	sampleChemEdit->setText(activeSample->chemical);
+	sampleNoteEdit->setPlainText(activeSample->notes);
 	
 }
 
 
-Dialog::Dialog(QWidget* parent){
-	
+Dialog::Dialog(SampleData *sample, QWidget *){
 	
 	// Right Edit Pane
-	editPaneLayout = new Editor();
+	editPaneLayout = new Editor(sample, this);
 	
 	// OS standard accept/cancel buttons bound to slots
 	QDialogButtonBox *buttonBox = new QDialogButtonBox(
-		QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+			QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(buttonBox, SIGNAL(accepted()), parent, SLOT(setData()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 	
 	// Assemble everything and display the entire widget
 	mainLayout = new QVBoxLayout;
@@ -72,6 +77,6 @@ Dialog::Dialog(QWidget* parent){
 	setLayout(mainLayout);
 }
 
-SampleData* Dialog::getData(){
-	return editPaneLayout->sample;
+Dialog::~Dialog() {
+	// Widgets should be deleted automatically by parent
 }
